@@ -99,9 +99,7 @@
       font-weight: bold;
       cursor: pointer;
     }
-    button:hover {
-      background: #dddddd;
-    }
+    button:hover { background: #dddddd; }
 
     .play-btn {
       background: #0055ff;
@@ -318,7 +316,6 @@
     <p id="final-score" style="font-size: 1.1rem; margin-top: 5px;"></p>
     <div id="rank-display" class="rank-title" style="font-size: 1.4rem;"></div>
 
-    <!-- LEADERBOARD SUBMISSION PROMPT (ONLY SHOWN IF PLAYING TODAY) -->
     <div id="lb-submit-section" class="hidden" style="margin-top: 10px; background: #fff8e1; border: 2px solid #ffaa00; padding: 10px;">
       <p style="font-size: 0.85rem; font-weight: bold; margin: 0 0 5px 0;">Submit to Today's Leaderboard!</p>
       <input type="text" id="lb-nickname" placeholder="Enter Nickname (NO real names!)" style="margin-bottom: 5px; padding: 6px; font-size: 0.9rem;">
@@ -384,7 +381,7 @@
       <button class="tab-btn active" id="mod-tab-sub" onclick="switchModTab('subs')">Submissions</button>
       <button class="tab-btn" id="mod-tab-lb" onclick="switchModTab('lb')">Leaderboard</button>
     </div>
-    <div id="mod-content" style="max-height: 260px; overflow-y: auto; text-align: left;"></div>
+    <div id="mod-content" style="max-height: 260px; overflow-y: auto; text-align: left;">Loading...</div>
     <button class="archive-btn" id="mod-back-btn" style="margin-top: 15px;">BACK TO MENU</button>
   </div>
 </div>
@@ -854,46 +851,54 @@
     }, 2000);
   }
 
-  // --- LEADERBOARD LOGIC ---
-  function openLeaderboard() {
+  // --- CLOUD LEADERBOARD LOGIC ---
+  async function openLeaderboard() {
     showScreen('leaderboard-screen');
-    switchLbTab('today');
+    await switchLbTab('today');
   }
 
-  window.switchLbTab = function(tab) {
+  window.switchLbTab = async function(tab) {
     document.getElementById('tab-today').className = "tab-btn" + (tab === 'today' ? " active" : "");
     document.getElementById('tab-weekly').className = "tab-btn" + (tab === 'weekly' ? " active" : "");
     document.getElementById('tab-all').className = "tab-btn" + (tab === 'all' ? " active" : "");
 
     const container = document.getElementById('lb-list-content');
-    let scores = JSON.parse(localStorage.getItem('moldy_leaderboard') || '[]');
-    const now = Date.now();
+    container.innerHTML = 'Loading leaderboard...';
 
-    if (tab === 'today') {
-      const oneDay = 86400000;
-      scores = scores.filter(s => (now - s.timestamp) < oneDay);
-    } else if (tab === 'weekly') {
-      const oneWeek = 7 * 86400000;
-      scores = scores.filter(s => (now - s.timestamp) < oneWeek);
+    try {
+      const res = await fetch('/api/submissions');
+      const data = await res.json();
+      let scores = data.leaderboard || [];
+      const now = Date.now();
+
+      if (tab === 'today') {
+        const oneDay = 86400000;
+        scores = scores.filter(s => (now - s.timestamp) < oneDay);
+      } else if (tab === 'weekly') {
+        const oneWeek = 7 * 86400000;
+        scores = scores.filter(s => (now - s.timestamp) < oneWeek);
+      }
+
+      scores.sort((a, b) => b.score - a.score || a.timestamp - b.timestamp);
+
+      if (scores.length === 0) {
+        container.innerHTML = '<p style="color: #666; text-align: center; padding: 20px;">No scores recorded yet!</p>';
+        return;
+      }
+
+      container.innerHTML = '';
+      scores.forEach((entry, idx) => {
+        const row = document.createElement('div');
+        row.className = 'lb-row';
+        row.innerHTML = `<span>#${idx + 1} <strong>${entry.name}</strong></span> <span><strong>${entry.score}</strong> pts</span>`;
+        container.appendChild(row);
+      });
+    } catch (err) {
+      container.innerHTML = '<p style="color: red; text-align: center;">Failed to load leaderboard.</p>';
     }
-
-    scores.sort((a, b) => b.score - a.score || a.timestamp - b.timestamp);
-
-    if (scores.length === 0) {
-      container.innerHTML = '<p style="color: #666; text-align: center; padding: 20px;">No scores recorded yet!</p>';
-      return;
-    }
-
-    container.innerHTML = '';
-    scores.forEach((entry, idx) => {
-      const row = document.createElement('div');
-      row.className = 'lb-row';
-      row.innerHTML = `<span>#${idx + 1} <strong>${entry.name}</strong></span> <span><strong>${entry.score}</strong> pts</span>`;
-      container.appendChild(row);
-    });
   };
 
-  function submitScoreToLeaderboard() {
+  async function submitScoreToLeaderboard() {
     const name = document.getElementById('lb-nickname').value.trim() || "Anonymous Pickle";
     const newEntry = {
       name: name,
@@ -901,16 +906,26 @@
       timestamp: Date.now()
     };
 
-    let scores = JSON.parse(localStorage.getItem('moldy_leaderboard') || '[]');
-    scores.push(newEntry);
-    localStorage.setItem('moldy_leaderboard', JSON.stringify(scores));
-
-    alert("Score submitted to today's leaderboard! 🏆");
-    document.getElementById('lb-submit-section').classList.add('hidden');
-    openLeaderboard();
+    try {
+      const res = await fetch('/api/submissions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'leaderboard', action: 'add', data: newEntry })
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert("Score submitted to today's leaderboard! 🏆");
+        document.getElementById('lb-submit-section').classList.add('hidden');
+        openLeaderboard();
+      } else {
+        alert("Failed to submit score.");
+      }
+    } catch (err) {
+      alert("Network error.");
+    }
   }
 
-  // --- QUESTION SUBMISSION LOGIC ---
+  // --- CLOUD QUESTION SUBMISSION LOGIC ---
   function openSubmitScreen() {
     document.getElementById('sub-author').value = '';
     document.getElementById('sub-category').value = '';
@@ -922,7 +937,7 @@
     showScreen('submit-screen');
   }
 
-  function saveUserSubmission() {
+  async function saveUserSubmission() {
     const author = document.getElementById('sub-author').value.trim() || "Anonymous Pickle";
     const category = document.getElementById('sub-category').value.trim();
     const fake = document.getElementById('sub-fake').value.trim();
@@ -943,12 +958,22 @@
       explanation: exp || "Submitted by player"
     };
 
-    let existingSubmissions = JSON.parse(localStorage.getItem('moldy_submissions') || '[]');
-    existingSubmissions.push(newQ);
-    localStorage.setItem('moldy_submissions', JSON.stringify(existingSubmissions));
-
-    alert("Question submitted successfully! Thanks for helping out 🥒");
-    showStartScreen();
+    try {
+      const res = await fetch('/api/submissions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'question', action: 'add', data: newQ })
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert("Question submitted successfully! Thanks for helping out 🥒");
+        showStartScreen();
+      } else {
+        alert("Error saving submission.");
+      }
+    } catch (err) {
+      alert("Network error.");
+    }
   }
 
   // --- MODERATOR PANEL LOGIC ---
@@ -971,84 +996,117 @@
     loadModDashboard();
   };
 
-  function loadModDashboard() {
+  async function loadModDashboard() {
     const container = document.getElementById('mod-content');
-    container.innerHTML = '';
+    container.innerHTML = 'Loading from database...';
 
-    if (currentModTab === 'subs') {
-      let submissions = JSON.parse(localStorage.getItem('moldy_submissions') || '[]');
-      if (submissions.length === 0) {
-        container.innerHTML = '<p style="color: #666;">No player submissions waiting right now.</p>';
-        return;
+    try {
+      const res = await fetch('/api/submissions');
+      const data = await res.json();
+
+      if (currentModTab === 'subs') {
+        let submissions = data.questions || [];
+        if (submissions.length === 0) {
+          container.innerHTML = '<p style="color: #666;">No player submissions waiting right now.</p>';
+          return;
+        }
+
+        container.innerHTML = '';
+        submissions.forEach((q, idx) => {
+          const box = document.createElement('div');
+          box.style.border = "1px solid #000";
+          box.style.padding = "8px";
+          box.style.marginBottom = "8px";
+          box.style.background = "#f9f9f9";
+
+          box.innerHTML = `
+            <div><strong>By:</strong> ${q.author}</div>
+            <div><strong>Category:</strong> ${q.category}</div>
+            <div style="color: #cc0000;"><strong>Fake:</strong> ${q.choices[0]}</div>
+            <div style="color: #008000;"><strong>Real:</strong> ${q.choices[1]}, ${q.choices[2]}, ${q.choices[3]}</div>
+            <br>
+            <button onclick="approveSub(${idx})" style="background: #008000; color: #fff; padding: 4px 8px; font-size: 0.8rem;">Approve to Day 1</button>
+            <button onclick="deleteSub(${idx})" style="background: #cc0000; color: #fff; padding: 4px 8px; font-size: 0.8rem;">Delete</button>
+          `;
+          container.appendChild(box);
+        });
+      } else {
+        let scores = data.leaderboard || [];
+        if (scores.length === 0) {
+          container.innerHTML = '<p style="color: #666;">No leaderboard scores recorded.</p>';
+          return;
+        }
+
+        container.innerHTML = '';
+        scores.forEach((s, idx) => {
+          const box = document.createElement('div');
+          box.style.border = "1px solid #000";
+          box.style.padding = "8px";
+          box.style.marginBottom = "8px";
+          box.style.background = "#fff";
+          box.style.display = "flex";
+          box.style.justifyContent = "space-between";
+          box.style.alignItems = "center";
+
+          box.innerHTML = `
+            <div><strong>${s.name}</strong> - ${s.score} pts</div>
+            <button onclick="deleteLbScore(${idx})" style="background: #cc0000; color: #fff; padding: 4px 8px; font-size: 0.8rem;">Remove</button>
+          `;
+          container.appendChild(box);
+        });
       }
-
-      submissions.forEach((q, idx) => {
-        const box = document.createElement('div');
-        box.style.border = "1px solid #000";
-        box.style.padding = "8px";
-        box.style.marginBottom = "8px";
-        box.style.background = "#f9f9f9";
-
-        box.innerHTML = `
-          <div><strong>By:</strong> ${q.author}</div>
-          <div><strong>Category:</strong> ${q.category}</div>
-          <div style="color: #cc0000;"><strong>Fake:</strong> ${q.choices[0]}</div>
-          <div style="color: #008000;"><strong>Real:</strong> ${q.choices[1]}, ${q.choices[2]}, ${q.choices[3]}</div>
-          <br>
-          <button onclick="approveSub(${idx})" style="background: #008000; color: #fff; padding: 4px 8px; font-size: 0.8rem;">Approve to Day 1</button>
-          <button onclick="deleteSub(${idx})" style="background: #cc0000; color: #fff; padding: 4px 8px; font-size: 0.8rem;">Delete</button>
-        `;
-        container.appendChild(box);
-      });
-    } else {
-      let scores = JSON.parse(localStorage.getItem('moldy_leaderboard') || '[]');
-      if (scores.length === 0) {
-        container.innerHTML = '<p style="color: #666;">No leaderboard scores recorded.</p>';
-        return;
-      }
-
-      scores.forEach((s, idx) => {
-        const box = document.createElement('div');
-        box.style.border = "1px solid #000";
-        box.style.padding = "8px";
-        box.style.marginBottom = "8px";
-        box.style.background = "#fff";
-        box.style.display = "flex";
-        box.style.justifyContent = "space-between";
-        box.style.alignItems = "center";
-
-        box.innerHTML = `
-          <div><strong>${s.name}</strong> - ${s.score} pts</div>
-          <button onclick="deleteLbScore(${idx})" style="background: #cc0000; color: #fff; padding: 4px 8px; font-size: 0.8rem;">Remove</button>
-        `;
-        container.appendChild(box);
-      });
+    } catch (err) {
+      container.innerHTML = '<p style="color: red;">Failed to load mod panel.</p>';
     }
   }
 
-  window.approveSub = function(index) {
-    let submissions = JSON.parse(localStorage.getItem('moldy_submissions') || '[]');
-    const approvedQ = submissions[index];
-    if (!dailyQuestions[1]) dailyQuestions[1] = [];
-    dailyQuestions[1].push(approvedQ);
-    submissions.splice(index, 1);
-    localStorage.setItem('moldy_submissions', JSON.stringify(submissions));
-    alert("Approved and added to Day 1!");
-    loadModDashboard();
+  window.approveSub = async function(index) {
+    try {
+      const res = await fetch('/api/submissions');
+      const data = await res.json();
+      let submissions = data.questions || [];
+      const approvedQ = submissions[index];
+
+      if (!dailyQuestions[1]) dailyQuestions[1] = [];
+      dailyQuestions[1].push(approvedQ);
+
+      await fetch('/api/submissions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'question', action: 'delete', index: index })
+      });
+
+      alert("Approved!");
+      loadModDashboard();
+    } catch (err) {
+      alert("Error approving question.");
+    }
   };
 
-  window.deleteSub = function(index) {
-    let submissions = JSON.parse(localStorage.getItem('moldy_submissions') || '[]');
-    submissions.splice(index, 1);
-    localStorage.setItem('moldy_submissions', JSON.stringify(submissions));
-    loadModDashboard();
+  window.deleteSub = async function(index) {
+    try {
+      await fetch('/api/submissions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'question', action: 'delete', index: index })
+      });
+      loadModDashboard();
+    } catch (err) {
+      alert("Error deleting.");
+    }
   };
 
-  window.deleteLbScore = function(index) {
-    let scores = JSON.parse(localStorage.getItem('moldy_leaderboard') || '[]');
-    scores.splice(index, 1);
-    localStorage.setItem('moldy_leaderboard', JSON.stringify(scores));
-    loadModDashboard();
+  window.deleteLbScore = async function(index) {
+    try {
+      await fetch('/api/submissions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'leaderboard', action: 'delete', index: index })
+      });
+      loadModDashboard();
+    } catch (err) {
+      alert("Error removing score.");
+    }
   };
 
   window.addEventListener('DOMContentLoaded', () => {

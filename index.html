@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MoldyPickle - Find the Fake</title>
+  
+  <meta name="description" content="MoldyPickle - A daily quiz game where you find the fake answer out of four choices!">
+  <meta name="keywords" content="MoldyPickle, moldy pickle, find the fake, daily puzzle, trivia game">
+  <meta property="og:title" content="MoldyPickle - Find the Fake">
+  <meta property="og:description" content="Can you spot the fake answer? Play today's daily puzzle!">
+  <meta property="og:type" content="website">
+
+  <style>
+    * { box-sizing: border-box; font-family: Arial, sans-serif; }
+    body {
+      background: #ffffff;
+      color: #000000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .game-card {
+      background: #ffffff;
+      border: 3px solid #000000;
+      padding: 30px;
+      width: 90%;
+      max-width: 480px;
+      text-align: center;
+      position: relative;
+    }
+    
+    .pickle-banner {
+      background-image: url('pickle.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      padding: 20px;
+      margin-bottom: 5px;
+    }
+
+    .game-title {
+      color: #0055ff;
+      font-size: 2.8rem;
+      font-weight: bold;
+      margin: 0;
+      text-shadow: 2px 2px 0px #ffffff;
+    }
+    .game-subtitle {
+      color: #0055ff;
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-top: 5px;
+      margin-bottom: 25px;
+    }
+
+    .top-bar {
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .timer { color: #cc0000; }
+
+    .question {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      min-height: 40px;
+    }
+    .feedback-message {
+      min-height: 50px;
+      font-size: 1.05rem;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .correct-text { color: #008000; }
+    .wrong-text { color: #cc0000; }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    #archive-list {
+      max-height: 250px;       
+      overflow-y: auto;        
+      padding-right: 5px;      
+    }
+
+    button {
+      background: #ffffff;
+      color: #000000;
+      border: 2px solid #000000;
+      padding: 12px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #dddddd;
+    }
+
+    .play-btn {
+      background: #0055ff;
+      color: #ffffff;
+      border: 2px solid #000000;
+      font-weight: bold;
+      font-size: 1.2rem;
+      padding: 14px 30px;
+      width: 100%;
+      margin-top: 10px;
+    }
+    .play-btn:hover { background: #0033cc; }
+
+    .archive-btn {
+      background: #ffffff;
+      color: #0055ff;
+      border: 2px solid #0055ff;
+      font-weight: bold;
+      font-size: 1.1rem;
+      padding: 14px 30px;
+      width: 100%;
+      margin-top: 10px;
+    }
+    .archive-btn:hover { background: #f0f5ff; }
+
+    .share-btn {
+      background: #008000;
+      color: #ffffff;
+      border: 2px solid #000000;
+      font-weight: bold;
+      font-size: 1.1rem;
+      padding: 14px 30px;
+      width: 100%;
+      margin-top: 15px;
+    }
+    .share-btn:hover { background: #006600; }
+
+    .leaderboard-btn {
+      background: #ffaa00;
+      color: #000000;
+      border: 2px solid #000000;
+      font-weight: bold;
+      font-size: 1.1rem;
+      padding: 14px 30px;
+      width: 100%;
+      margin-top: 10px;
+    }
+    .leaderboard-btn:hover { background: #e09500; }
+
+    .submit-prompt-box {
+      margin-top: 20px;
+      padding: 12px;
+      background: #f0f5ff;
+      border: 2px dashed #0055ff;
+      font-size: 0.95rem;
+      font-weight: bold;
+    }
+
+    .submit-trigger-btn {
+      background: #ff8800;
+      color: #ffffff;
+      border: 2px solid #000000;
+      font-weight: bold;
+      font-size: 1rem;
+      padding: 10px 20px;
+      width: 100%;
+      margin-top: 8px;
+    }
+    .submit-trigger-btn:hover { background: #cc6600; }
+
+    .mod-corner-btn {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      background: #333333;
+      color: #ffffff;
+      border: 2px solid #000000;
+      font-size: 0.8rem;
+      padding: 6px 10px;
+      cursor: pointer;
+      z-index: 999;
+    }
+    .mod-corner-btn:hover { background: #000000; }
+
+    .rank-title {
+      font-size: 1.8rem;
+      color: #0055ff;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .results-container {
+      margin-top: 15px;
+      text-align: left;
+      border-top: 2px solid #000000;
+      padding-top: 10px;
+      max-height: 120px;
+      overflow-y: auto;
+    }
+    .result-item {
+      margin-bottom: 8px;
+      font-size: 0.85rem;
+      padding: 6px;
+      border: 1px solid #ccc;
+    }
+    .result-item-title { font-weight: bold; margin-bottom: 2px; }
+    .user-ans { font-weight: bold; }
+    .user-correct { color: #008000; }
+    .user-wrong { color: #cc0000; }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 2px solid #000000;
+      font-size: 1rem;
+    }
+
+    .tab-container {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 15px;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 8px;
+      font-size: 0.9rem;
+      background: #eee;
+      border: 2px solid #000;
+    }
+    .tab-btn.active {
+      background: #0055ff;
+      color: #fff;
+    }
+
+    .leaderboard-list {
+      max-height: 250px;
+      overflow-y: auto;
+      text-align: left;
+      border: 2px solid #000;
+      padding: 10px;
+      background: #fafafa;
+    }
+    .lb-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid #ddd;
+      font-size: 0.95rem;
+    }
+
+    .toast {
+      background: #000000;
+      color: #ffffff;
+      padding: 8px 16px;
+      font-weight: bold;
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 4px;
+      z-index: 1000;
+    }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<button class="mod-corner-btn" id="mod-portal-btn">⚙️ Mod</button>
+
+<div class="game-card">
+  <div id="toast-msg" class="toast hidden">Copied to clipboard! 📋</div>
+
+  <!-- START SCREEN -->
+  <div id="start-screen">
+    <div class="pickle-banner">
+      <h1 class="game-title">MoldyPickle</h1>
+    </div>
+    <div class="game-subtitle">Find the Fake</div>
+    <button class="play-btn" id="play-today-btn">PLAY TODAY'S PUZZLE</button>
+    <button class="archive-btn" id="open-archive-btn">PUZZLE ARCHIVE</button>
+    <button class="leaderboard-btn" id="open-lb-from-menu">🏆 LEADERBOARD</button>
+
+    <div class="submit-prompt-box">
+      It's getting hard to think of questions, you can help by submitting your own!
+      <button class="submit-trigger-btn" id="open-submit-from-menu">SUBMIT A QUESTION</button>
+    </div>
+  </div>
+
+  <!-- ARCHIVE SCREEN -->
+  <div id="archive-screen" class="hidden">
+    <h2 class="game-title" style="font-size: 2rem;">Archive</h2>
+    <p style="font-weight: bold; margin-bottom: 20px;">Select a past puzzle to play:</p>
+    <div class="options" id="archive-list"></div>
+    <br>
+    <button class="archive-btn" id="archive-back-btn">BACK TO MAIN MENU</button>
+  </div>
+
+  <!-- PLAY SCREEN -->
+  <div id="play-screen" class="hidden">
+    <div class="top-bar">
+      <span class="timer" id="timer">Time: 30s</span>
+    </div>
+    
+    <div class="question" id="question">Loading...</div>
+    <div class="feedback-message" id="feedback"></div>
+    <div class="options" id="options"></div>
+  </div>
+
+  <!-- END SCREEN -->
+  <div id="end-screen" class="hidden">
+    <h2 class="game-title" id="end-title" style="font-size: 2rem;">Puzzle Complete!</h2>
+    <p id="final-score" style="font-size: 1.1rem; margin-top: 5px;"></p>
+    <div id="rank-display" class="rank-title" style="font-size: 1.4rem;"></div>
+
+    <!-- LEADERBOARD SUBMISSION PROMPT (ONLY SHOWN IF PLAYING TODAY) -->
+    <div id="lb-submit-section" class="hidden" style="margin-top: 10px; background: #fff8e1; border: 2px solid #ffaa00; padding: 10px;">
+      <p style="font-size: 0.85rem; font-weight: bold; margin: 0 0 5px 0;">Submit to Today's Leaderboard!</p>
+      <input type="text" id="lb-nickname" placeholder="Enter Nickname (NO real names!)" style="margin-bottom: 5px; padding: 6px; font-size: 0.9rem;">
+      <button class="leaderboard-btn" id="lb-submit-btn" style="padding: 8px; font-size: 0.9rem; margin-top: 0;">SUBMIT SCORE</button>
+    </div>
+
+    <button class="share-btn" id="share-btn" style="margin-top: 10px; padding: 10px;">SHARE RESULT 📋</button>
+
+    <div class="results-container">
+      <h3 style="margin-top: 0; text-align: center; color: #0055ff; font-size: 0.9rem;">Results Breakdown</h3>
+      <div id="results-breakdown"></div>
+    </div>
+
+    <button class="play-btn" id="end-menu-btn" style="margin-top: 10px; padding: 10px;">BACK TO MENU</button>
+  </div>
+
+  <!-- LEADERBOARD SCREEN -->
+  <div id="leaderboard-screen" class="hidden">
+    <h2 class="game-title" style="font-size: 1.8rem;">Leaderboards</h2>
+    <div class="tab-container">
+      <button class="tab-btn active" id="tab-today" onclick="switchLbTab('today')">Today</button>
+      <button class="tab-btn" id="tab-weekly" onclick="switchLbTab('weekly')">Weekly</button>
+      <button class="tab-btn" id="tab-all" onclick="switchLbTab('all')">All-Time</button>
+    </div>
+    <div class="leaderboard-list" id="lb-list-content">Loading...</div>
+    <button class="archive-btn" id="lb-back-btn" style="margin-top: 15px;">BACK TO MENU</button>
+  </div>
+
+  <!-- SUBMIT SCREEN -->
+  <div id="submit-screen" class="hidden">
+    <h2 class="game-title" style="font-size: 1.8rem;">Submit Question</h2>
+    <p style="font-size: 0.85rem; font-weight: bold; margin-bottom: 10px; color: #555;">Make sure the 1st choice is the FAKE answer!</p>
+    
+    <div style="text-align: left; font-size: 0.9rem; font-weight: bold;">Your Nickname <span style="color: #cc0000; font-size: 0.8rem;">(Do NOT use real name!)</span>:</div>
+    <input type="text" id="sub-author" placeholder="e.g. PickleMaster99">
+
+    <div style="text-align: left; font-size: 0.9rem; font-weight: bold;">Category / Topic:</div>
+    <input type="text" id="sub-category" placeholder="e.g. find the fake Marvel movie">
+
+    <div style="text-align: left; font-size: 0.9rem; font-weight: bold; color: #cc0000;">1. FAKE Answer (The incorrect one):</div>
+    <input type="text" id="sub-fake" placeholder="e.g. Iron Man 4">
+
+    <div style="text-align: left; font-size: 0.9rem; font-weight: bold; color: #008000;">2. Real Answer:</div>
+    <input type="text" id="sub-real1" placeholder="e.g. Endgame">
+
+    <div style="text-align: left; font-size: 0.9rem; font-weight: bold; color: #008000;">3. Real Answer:</div>
+    <input type="text" id="sub-real2" placeholder="e.g. Infinity War">
+
+    <div style="text-align: left; font-size: 0.9rem; font-weight: bold; color: #008000;">4. Real Answer:</div>
+    <input type="text" id="sub-real3" placeholder="e.g. Civil War">
+
+    <div style="text-align: left; font-size: 0.9rem; font-weight: bold;">Funny Explanation / Note:</div>
+    <input type="text" id="sub-explanation" placeholder="e.g. Iron man 4 doesn't exist">
+
+    <button class="play-btn" id="submit-save-btn" style="margin-top: 5px;">SUBMIT TO MODS</button>
+    <button class="archive-btn" id="submit-back-btn" style="margin-top: 8px;">CANCEL</button>
+  </div>
+
+  <!-- MODERATOR SCREEN -->
+  <div id="mod-screen" class="hidden">
+    <h2 class="game-title" style="font-size: 1.8rem;">Mod Dashboard</h2>
+    <div id="mod-tabs" style="display:flex; gap:5px; margin-bottom:10px;">
+      <button class="tab-btn active" id="mod-tab-sub" onclick="switchModTab('subs')">Submissions</button>
+      <button class="tab-btn" id="mod-tab-lb" onclick="switchModTab('lb')">Leaderboard</button>
+    </div>
+    <div id="mod-content" style="max-height: 260px; overflow-y: auto; text-align: left;"></div>
+    <button class="archive-btn" id="mod-back-btn" style="margin-top: 15px;">BACK TO MENU</button>
+  </div>
+</div>
+
+<script>
+  const dailyQuestions = {
+    1: [
+      { category: "Pepsi flavor", choices: ["Ultra", "Gold", "Electric", "Raw"], explanation: "I made ultra up, but they should make it" },
+      { category: "Chess move", choices: ["Polizzo", "En Passant", "Castle", "Checkmate"], explanation: "polizzo sounds like a type of sandwich" },
+      { category: "Metal", choices: ["Carbon", "Cobalt", "Calcium", "Chromium"], explanation: "carbon is a non metal brochacho" },
+      { category: "Spiderman villain", choices: ["Redhound", "Green Goblin", "Vulture", "Rhino"], explanation: "redhound sounds cool but i made him up" },
+      { category: "Planet", choices: ["The Moon", "Venus", "Mars", "Poltergeist"], explanation: "the moon is a moon not a planet" }
+    ],
+    2: [
+      { category: "Mammal", choices: ["Icthyosaurus", "Bat", "Elephant", "Whale"], explanation: "icthyosaur isnt a mammal duh" },
+      { category: "Batman movie", choices: ["The Lego Batman Movie 2", "The Dark Knight", "Son of Batman", "Batman Begins"], explanation: "there was no lego batman sequel" },
+      { category: "Trillion dollar company", choices: ["Disney", "Tesla", "NVIDIA", "Meta"], explanation: "disney only has 181.15 billion (Im richer)" },
+      { category: "Original skittles colour", choices: ["Blue", "Green", "Orange", "Purple"], explanation: "Blue was not in the original lineup" },
+      { category: "European country", choices: ["Bolivia", "Bosnia + H", "Belarus", "Bulgaria"], explanation: "Bolivia is in South America" }
+    ],
+    3: [
+      { category: "Prime number", choices: ["91", "43", "67", "47"], explanation: "7 x 13 = 91" },
+      { category: "Shakespeare play", choices: ["Arvello", "Macbeth", "The Tempest", "Romeo and Juliet"], explanation: "Arvello sounds cool but i made it up" },
+      { category: "Thing containing sugar", choices: ["Water", "Honey", "Watermelon", "Coco Pops"], explanation: "Water doesnt have sugar silly" },
+      { category: "Top 3 Music artist (Spotify)", choices: ["Justin Bieber", "Rihanna", "Bruno Mars", "The Weeknd"], explanation: "Justin Bieber is 4th" },
+      { category: "Correctly spelled word", choices: ["Marshmellow", "Dictionary", "Yacht", "Phantom"], explanation: "MarshAllow not marshmEllow" }
+    ],
+    4: [
+      { category: "Cheese", choices: ["Greensword", "Blue", "Halloumi", "Edam"], explanation: "greensword sounds cool but its fake" },
+      { category: "Greek letter", choices: ["Kambada", "Psi", "Omega", "Upsilon"], explanation: "Lambda is real, Kambada isn't" },
+      { category: "Football World Cup winner", choices: ["Portugal", "Italy", "Brazil", "Uruguay"], explanation: "Cristiano never got the big one" },
+      { category: "Capital City", choices: ["Bæsji", "Kabul", "Athens", "Praia"], explanation: "Bæsji means poop in Norwegian" },
+      { category: "Country with blue in flag", choices: ["Jamaica", "France", "Australia", "Sweden"], explanation: "No blue in Jamaica" }
+    ],
+    5: [
+      { category: "Shark", choices: ["Daggerscale", "Hammerhead", "Goblin", "Cookiecutter"], explanation: "Daggerscale isn't real bruddy" },
+      { category: "Roman Emperor", choices: ["Caesar", "Augustus", "Trajan", "Hadrian"], explanation: "Caesar was a DICTATOR, not an emperor" },
+      { category: "Van Gogh work", choices: ["25th Sweet Shop", "The Starry night", "The Potato eaters", "Irises"], explanation: "Van Gogh mightn't've liked sweets" },
+      { category: "Muppet", choices: ["Cherko", "Kermit", "Gonzo", "Beaker"], explanation: "Cherko no existo" },
+      { category: "Maths symbol", choices: ["✧", "π", "Φ", ">"], explanation: "I just HOPE you got this one right" }
+    ],
+    6: [
+      { category: "Classic Rubik's cube colour", choices: ["Purple", "Red", "White", "Orange"], explanation: "No purple here" },
+      { category: "2026 movie", choices: ["Fantastic 4: First Steps", "Hoppers", "Michael", "Highlander"], explanation: "Fantastic 4 was late 2025" },
+      { category: "31 day month", choices: ["November", "May", "August", "December"], explanation: "Thirty days has September, April, June, and NOVEMBER..." },
+      { category: "Italian city", choices: ["Jesenice", "Milan", "Barj", "Pisa"], explanation: "Jesenice is in Slovenia" },
+      { category: "Pepsico drinks", choices: ["Dr Pepper", "Mountain Dew", "Schweppes", "Gatorade"], explanation: "Dr Pepper are their own thingy" }
+    ],
+    7: [
+      { category: "Christmas Carol characters", choices: ["Billbert", "Marley", "Fezziwig", "Tiny Tim"], explanation: "Humbug Billbert" },
+      { category: "Word translating to 'Apple'", choices: ["Zambaya", "Pomme", "Manzana", "Apfel"], explanation: "Try putting Zambaya in google translate" },
+      { category: "Spider man actor", choices: ["Timothee Chalamet", "Tobey Maguire", "Andrew Garfield", "Tom Holland"], explanation: "no comment this one was easy" },
+      { category: "Force", choices: ["Nitro", "Gravity", "Tension", "Friction"], explanation: "No Nitrooo" },
+      { category: "Time periods", choices: ["Archezoic", "Mesozoric", "Stone Age", "Paleozoic"], explanation: "Archezoic is a Moldy Pickle" }
+    ],
+    8: [
+      { category: "Organ", choices: ["Coccyx", "Brain", "Skin", "Gallbladder"], explanation: "Coccyx is a bone not an organ" },
+      { category: "Temp. measures", choices: ["Bohrum", "Kelvin", "Celsius", "Fahrenheit"], explanation: "Bohrum is made up" },
+      { category: "Island country", choices: ["Venezuela", "Japan", "Sri Lanka", "Jamaica"], explanation: "Venezuela is on the mainland" },
+      { category: "Dr. Seuss books", choices: ["The BFG", "The Lorax", "Green eggs and ham", "The cat in the hat"], explanation: "BFG was Dahl" },
+      { category: "Disney Movie", choices: ["Kung Fu Panda", "Pinocchio", "Fantasia", "Zootopia"], explanation: "The Panda was a dreamworks movie" }
+    ],
+    9: [
+      { category: "Top 3 videogame", choices: ["Red Dead Redemption 2", "Minecraft", "Tetris", "GTA 5"], explanation: "not red dead" },
+      { category: "Olympic Sport", choices: ["Gaelic football", "Skateboarding", "Handball", "Wrestling"], explanation: "Gaelic football is too niche" },
+      { category: "American state", choices: ["Matanori", "Massachusetts", "Maryland", "Maine"], explanation: "America has no Matanori" },
+      { category: "Thing a cat might chase", choices: ["Lemon on a string", "Yarn ball", "laser point", "mouse"], explanation: "Cats hate lemons (I think)" },
+      { category: "Eye parts", choices: ["Viseoretix", "Macula", "Cornea", "Retina"], explanation: "I can't SEE a viseoretix" }
+    ],
+    10: [
+      { category: "Music note value", choices: ["Bermono", "Crotchet", "Quaver", "Minim"], explanation: "nooo bermonooo" },
+      { category: "Currency", choices: ["Covard", "Shilling", "Peso", "Yen"], explanation: "Covard not so" },
+      { category: "Martial art", choices: ["Stokkora", "Karate", "Kendo", "Judo"], explanation: "Stokkoraaaah" },
+      { category: "One of 7 world wonders", choices: ["Statue of Liberty", "Colosseum", "Petra", "Taj Mahal"], explanation: "Statue of Liberty is in New York!" },
+      { category: "Metric measure", choices: ["Degrees Fahrenheit", "Grams", "Metres", "Litres"], explanation: "Fahrenheit is AMERICAN" }
+    ],
+    11: [
+      { category: "Hairstyle", choices: ["Leaning tower", "Mohawk", "Afro", "Mullet"], explanation: "If you got this wrong you're in a bit of a PICKLE" },
+      { category: "Seasoning", choices: ["Berflind", "Cajun", "Paprika", "Garlic salt"], explanation: "Berflin(d) for the win(d)" },
+      { category: "Football rule", choices: ["Death by goalpost", "Offside", "Free kick", "Penalty"], explanation: "RAHHH" },
+      { category: "Type of owl", choices: ["Deadeye", "Barn", "Tawny", "Snowy"], explanation: "No deadeye owls" },
+      { category: "Type of wood", choices: ["Comber", "Walnut", "Cherry", "Mahogany"], explanation: "No comber" }
+    ],
+    12: [
+      { category: "Pickle component", choices: ["Hydrogen crystals", "Cucumber", "Salt", "Vinegar"], explanation: "how could you get this wrong" },
+      { category: "Pickleball rule", choices: ["Ball may bounce twice on one side", "Underhand serve", "ball must bounce twice after serve", "no volley zone"], explanation: "no double bounces" },
+      { category: "Thing that gets pickled", choices: ["Avocado", "Onion", "Blueberry", "Egg"], explanation: "What did Jesus say when he sat on an avocado? Holy guacamole!" },
+      { category: "Burger containing pickle", choices: ["KFC standard", "Big Mac", "Five Guys standard", "Whopper"], explanation: "Kentucky don't want no pickles" },
+      { category: "Place where pickle is used", choices: ["I'm so hungry i could eat a pickle", "MR PICKLES", "I'm in a pickle now!", "whatever tickles your pickle"], explanation: "I'm so hungry i could eat a pickle is wrong!" }
+    ],
+    13: [
+      { category: "Top 3 Richest country (GDP)", choices: ["France", "USA", "Germany", "China"], explanation: "Pas la France" },
+      { category: "Finger", choices: ["Supercalifragilisticexpialidocious", "Index", "Middle", "Little"], explanation: "That's a bit long for a finger name" },
+      { category: "Acidic thing", choices: ["Avocado", "Tomato", "Coffee", "Beer"], explanation: "Avocalkali" },
+      { category: "Multiple of 7", choices: ["75", "35", "84", "133"], explanation: "75 / 7 = 10.71" },
+      { category: "Star wars film", choices: ["Fall of the Jedi", "The Phantom Menace", "The Force Awakens", "Return of the Jedi"], explanation: "The Jedi NEVER fall" }
+    ],
+    14: [
+      { category: "Gaming controller feature", choices: ["≈4.6μg Uranium", "Joystick", "D Pad", "Trigger"], explanation: "If you thought uranium was in there this isn’t the game for you" },
+      { category: "Word autosearched after 'How to poop ____' in google", choices: ["secretly in public", "Instantly", "In the morning", "When constipated"], explanation: "People don't want to poop in public apparently" },
+      { category: "Moon phase", choices: ["Waxing Correna", "Waxing Crescent", "Waxing Gibbous", "Full moon"], explanation: "Not correna" },
+      { category: "Chinese Zodiac animal", choices: ["Panda", "Ox", "Monkey", "Pig"], explanation: "No kung fu panda rahrahrah" },
+      { category: "Country with amazon river", choices: ["Argentina", "Peru", "Colombia", "Brazil"], explanation: "no argentinananana" }
+    ],
+    15: [
+      { category: "Mountain range", choices: ["Sembradas", "Himalayas", "Andes", "Alborz"], explanation: "Sembradas is fake" },
+      { category: "Arachnid", choices: ["Crab", "Scorpion", "Spider", "Tick"], explanation: "Crabs are crustaceans, not arachnids" },
+      { category: "Guitar feature", choices: ["Twindle", "Fret", "headstock", "saddle"], explanation: "Twindle is made up" },
+      { category: "Computer button", choices: ["Ntr", "Fn", "Ctrl", "Alt Gr"], explanation: "It's Enter, not Ntr" },
+      { category: "Bee job", choices: ["Stinger", "Queen", "Drone", "Worker"], explanation: "Stinger is a body part, not a job role" }
+    ],
+    16: [
+      { category: "Japanese dish", choices: ["Kimchi", "Sushi", "Ramen", "Miso soup"], explanation: "Kimchi is korean 예" },
+      { category: "Jurassic World movie", choices: ["Indominous", "Rebirth", "Dominion", "Fallen kingdom"], explanation: "Indominot!" },
+      { category: "German city", choices: ["Echspraß", "Hamburg", "Cologne", "Dortmund"], explanation: "Nein Echspraß" },
+      { category: "Superhero real name", choices: ["Bruce Roberts", "Clark Kent", "Bruce Banner", "Bruce Wayne"], explanation: "no Bruce Roberts euhgeuhguehg" },
+      { category: "Football (soccer) shot", choices: ["Desperado", "Knuckleball", "Finesse", "Trivela"], explanation: "Youre getting desperado" }
+    ],
+    17: [
+      { category: "Top 3 fast food restaurant (by sales)", choices: ["Burger King", "McDonald's", "Starbucks", "KFC"], explanation: "Burger King is outside top 3" },
+      { category: "Vertebrate", choices: ["Crab", "Human", "Elephant", "Shark"], explanation: "no crababa" },
+      { category: "Guitar gain effect", choices: ["Rewamp", "Fuzz", "Distortion", "Overdrive"], explanation: "Rewomp womp" },
+      { category: "Top 3 tallest building", choices: ["One World Trade Center", "Burj Khalifa", "Merdeka 118", "Shanghai Tower"], explanation: "World Trade is shorter" },
+      { category: "Backwards food", choices: ["etinarg", "otamot", "odacova", "elomacaug"], explanation: "Granite isn't a food" },
+      { category: "Infinity stone", choices: ["Shadow", "Space", "Mind", "Power"], explanation: "No shadow stone" },
+      { category: "Part of a circle", choices: ["Diaphragm", "Circumference", "Diameter", "Radius"], explanation: "No diaphragm" },
+      { category: "Official phobia", choices: ["Clownophobia", "Radiophobia", "Thermophobia", "Claustrophobia"], explanation: "Fear of clowns is Coulrophobia" }
+    ],
+    18: [
+      { category: "Mario character", choices: ["Draco", "Peach", "Shy guy", "Toad"], explanation: "noo dracoo" },
+      { category: "Mario power up", choices: ["Scuba suit", "Fire flower", "mushroom", "Super leaf"], explanation: "scuba suit isnt real" },
+      { category: "Mario game", choices: ["Valley", "Odyssey", "Party", "Galaxy"], explanation: "no valley here" },
+      { category: "Batman villain", choices: ["Claymore", "Two-face", "Bane", "The Penguin"], explanation: "no claymore" },
+      { category: "Superman power", choices: ["Telepathy", "heat vision", "freeze breath", "flight"], explanation: "not a telopath" },
+      { category: "DC superteam", choices: ["Dead sins", "Justice league", "teen titans", "suicide squad"], explanation: "no dead sins" },
+      { category: "Guardians of the galaxy member", choices: ["Pensula", "Star lord", "mantis", "groot"], explanation: "no pensula silly" }
+    ],
+    19: [
+      { category: "Avengers movie", choices: ["Invision", "Infinity war", "Endgame", "Age of ultron"], explanation: "inviSON" },
+      { category: "Animal that is also a superhero", choices: ["Nautilus", "Black widow", "Wolverine", "Wasp"], explanation: "NOTilus" },
+      { category: "Country that borders china", choices: ["South Korea", "Pakistan", "India", "Vietnam"], explanation: "south korea is cut off by north korea" },
+      { category: "Country with red in its flag", choices: ["Saudi Arabia", "Turkey", "tunisia", "croatia"], explanation: "Saudi Arabia has green" },
+      { category: "Country in southern hemisphere", choices: ["Singapore", "Chile", "New Zealand", "Argentina"], explanation: "singapore more like singaNORTH" },
+      { category: "Top 3 most used emoji", choices: ["Skull", "Loudly crying face", "Rolling on floor laughing", "Face with tears of joy"], explanation: "💀" },
+      { category: "Top 3 spotify song", choices: ["Riptide", "Blinding lights", "Shape of you", "sweater weather"], explanation: "No riptide" }
+    ],
+    20: [
+      { category: "Top 3 downloaded apps", choices: ["Uber", "ChatGPT", "Instagram", "Tiktok"], explanation: "Uuuuuuubeeeeer" },
+      { category: "Compass point", choices: ["WS", "NW", "SE", "NE"], explanation: "WS would be west south, so its fake" },
+      { category: "Equation where x=3", choices: ["√x = 1.3", "x + 5 = 8", "x² = 9", "39 ÷ x = 13"], explanation: "root 3 is not 1.3" },
+      { category: "Measure of time", choices: ["lightyear", "nanosecond", "zeptosecond", "minute"], explanation: "a lightyear measures distance rehehehehe" },
+      { category: "Spanish number", choices: ["sertento", "dos", "siete", "seis"], explanation: "no sertento" },
+      { category: "German number", choices: ["streis", "eins", "vier", "elf"], explanation: "streisful right" },
+      { category: "French number", choices: ["ocho", "quatre", "huit", "neuf"], explanation: "ocho es español" }
+    ],
+    21: [
+      { category: "Part of a shoe", choices: ["Hull", "Vamp", "Tongue", "Shank"], explanation: "the hull is on a ship" },
+      { category: "Part of a flower", choices: ["cherb", "stigma", "filament", "receptacle"], explanation: "cherby berby" },
+      { category: "Part of a brain", choices: ["atrongnorta", "hippocampus", "cerebellum", "amygdala"], explanation: "atrognorta isn't real but is a palendrome" },
+      { category: "Electrical conductor", choices: ["diamond", "copper", "steel", "gold"], explanation: "diamond insulates" },
+      { category: "Periodic element", choices: ["Zeiglum", "Gallium", "Mercury", "Rutherfordium"], explanation: "Zieglummmm" },
+      { category: "Metal", choices: ["Chlorine", "Potassium", "Silver", "Calcium"], explanation: "Chlorine is a halogen gas/non-metal" },
+      { category: "Fruit that is also a colour", choices: ["Jabuticaba", "Orange", "Lime", "Peach"], explanation: "not even I know the answer" }
+    ],
+    22: [
+      { category: "Primary colour", choices: ["Green", "Red", "Yellow", "blue"], explanation: "no greeeen" },
+      { category: "Type of green", choices: ["Garnet", "Emerald", "Sage", "Seladon"], explanation: "garnetto is reddo" },
+      { category: "Date", choices: ["February 30th 2006", "September 1st 1653", "November 11th 1111", "January 1st 1900"], explanation: "February can only have 29 days" },
+      { category: "Word that is a verb, adjective and noun", choices: ["strike", "class", "poo", "best"], explanation: "adjerbouns" },
+      { category: "Ends in a vowel", choices: ["√", "π", ",", "3"], explanation: "rooT" },
+      { category: "Synonym", choices: ["Cuff", "Pacifier", "Binkie", "Dummy"], explanation: "nobody calls it a cuff, chuff" },
+      { category: "Synonym", choices: ["Spelunk", "Feces", "Excrement", "dookie"], explanation: "I spelunked in the toilet" }
+    ],
+    23: [
+      { category: "Synonym", choices: ["Superlative", "Chopper", "Copter", "Whirlybird"], explanation: "superNOTive" },
+      { category: "Text feature in a Word document", choices: ["Depixelled", "Underline", "Bold", "Italics"], explanation: "de what?" },
+      { category: "Feature of a book", choices: ["Cerebral", "Cover", "Blurb", "Spine"], explanation: "bah Im making these too easy" },
+      { category: "Feature of an axolotl", choices: ["can change eye colour", "Regenerates body parts", "no eyelids", "external gills"], explanation: "humans can change eye colour through surgery" },
+      { category: "Vowel, in this sentence, right here up in the top?", choices: ["A", "E", "O", "U"], explanation: "no A in that sentence at the top" },
+      { category: "1 of 3 F’s", choices: ["Fart", "Fight", "Flight", "Freeze"], explanation: "hilarious I know" },
+      { category: "Colour representation method", choices: ["BMX", "RGB", "Hex code", "Pantone"], explanation: "BMX is a bike broh" }
+    ],
+    24: [
+      { category: "Haribo starmix shape", choices: ["Strawb", "Cola bottle", "Fried egg", "Ring"], explanation: "Strawb is NOT in starmix" },
+      { category: "Chocolate containing nuts", choices: ["Double decker", "Toblerone", "Snickers", "Reese’s nutrageous"], explanation: "double down" },
+      { category: "Top 3 crisp (potato chip) brand", choices: ["Mccoys", "Pringles", "Doritos", "Walkers"], explanation: "noone surpasses the big 3" },
+      { category: "Type of government", choices: ["Religocracy", "Dictatorship", "Oligarchy", "Theocracy"], explanation: "Theocracy is actually religious government, so Religocracy doesn't exist" },
+      { category: "Catholic leader", choices: ["Archpriest", "Pope", "Cardinal", "Patriarch"], explanation: "no Archpriest, sounds like a cool role though" },
+      { category: "Top 3 most followed religion", choices: ["Judaism", "Christianity", "Islam", "Hinduism"], explanation: "Hinduism and Buddhism surpass Judaism I thought that was interesting" },
+      { category: "Top 3 horror movie (by sales)", choices: ["Obsession", "It", "The sixth sense", "I am legend"], explanation: "obsession is already 5th!?" }
+    ],
+    25: [
+      { category: "Halloween tradition", choices: ["Eating window panels", "Pumpkin carving", "Trick or treating", "Vandalism"], explanation: "yes people vandalise the house if not given treats" },
+      { category: "Person that DOESN’T eat meat", choices: ["Flexitarian", "Eggetarian", "Vegetarian", "Vegan"], explanation: "Flexitarians eat some meat" },
+      { category: "Golf club", choices: ["Overdrive", "Driver", "Iron", "Wedge"], explanation: "under drive" },
+      { category: "Type of pokemon", choices: ["Shield", "Dragon", "Fire", "Poison"], explanation: "shield isn't" },
+      { category: "Game show host", choices: ["Charlie Carrey", "Steve Harvey", "Bradley Walsh", "Bob Barker"], explanation: "Charlie not carrying" },
+      { category: "Simpson", choices: ["Martha", "Homer", "Lisa", "Santa’s little helper"], explanation: "Martha no exista" },
+      { category: "Finger bone", choices: ["Struppy", "Proximal phalanx", "Metacarpophalangeal joints", "Distal Interphalangeal bone"], explanation: "Struppy isnt" }
+    ],
+    26: [
+      { category: "Top 3 shoe brand (by sales)", choices: ["New balance", "Nike", "Adidas", "Skechers"], explanation: "new balance is 4th" },
+      { category: "Moana character", choices: ["Mauga", "Moana", "Maui", "Gramma Tala"], explanation: "Mauga nah" },
+      { category: "Planet larger than earth", choices: ["Mars", "Jupiter", "Uranus", "Neptune"], explanation: "Mars is smaller?!" },
+      { category: "Type of erosion", choices: ["Apparition", "Abrasion", "Attrition", "Solution"], explanation: "apparently apparition applies not" },
+      { category: "Vwl missing frm this sntnc", choices: ["i", "e", "o", "u"], explanation: "i is there" },
+      { category: "Setting", choices: ["Self destruct", "Brightness", "Volume", "Battery saver"], explanation: ":(" },
+      { category: "Part of ear", choices: ["Receptacle", "Pinna", "Eardrum", "Canal"], explanation: "receptacle is in the eye, duh" }
+    ],
+    27: [
+      { category: "Top 3 Boys name", choices: ["Jack", "Mohammad", "Noah", "Liam"], explanation: "Jack of no trades" },
+      { category: "Top 3 wordle starter word", choices: ["Round", "Adieu", "Audio", "Stare"], explanation: "Roundaboutsss" },
+      { category: "Type of drum", choices: ["Wumba", "Djembe", "Snare", "Tom"], explanation: "wumbabababa" },
+      { category: "Kung fu panda character", choices: ["Master Groona", "Po", "Master Shifu", "Master Oogway"], explanation: "master groonaaaa" },
+      { category: "Spiderman power", choices: ["8 legs", "Webs", "Sense", "Strength"], explanation: "2 legs on this spider" },
+      { category: "Popular soda", choices: ["Fizzle Pop", "Sprite", "Fanta", "Pepsi"], explanation: "Fizzle Pop is only in Equestria" },
+      { category: "Continent", choices: ["Pacifica", "Asia", "Africa", "Antarctica"], explanation: "Pacifica is an ocean region" }
+    ]
+  };
+
+  const totalDays = Object.keys(dailyQuestions).length;
+  const startAnchorTimestamp = 1791331200; 
+  const currentTimestamp = Math.floor(Date.now() / 1000);
+  const daysPassed = Math.floor((currentTimestamp - startAnchorTimestamp) / 86400);
+  
+  const rawDayNumber = Math.max(1, daysPassed + 1);
+  const todayKey = ((rawDayNumber - 1) % totalDays) + 1;
+
+  let activePuzzleNumber = 1;
+  let isTodayPlay = false;
+  let questions = [];
+  let currentQuestionIndex = 0;
+  let score = 0;
+  let timerInterval = null;
+  let timeLeft = 30;
+  let canAnswer = true;
+  let userAnswersLog = [];
+
+  function getRankTitle(finalScore, maxScore) {
+    switch (finalScore) {
+      case 0: return "Moldy pickle 🥒";
+      case 1: return "Pickle Slice 🥒";
+      case 2: return "Average pickle 🥒";
+      case 3: return "Strong pickle 🥒";
+      case 4: return "Super Pickle 🥒";
+      case 5: return "Genius Pickle 🥒";
+      case 6: return "All knowing pickle 🥒";
+      case 7: case 8: return "Pickle above all 🥒";
+      default: return "Pickle 🥒";
+    }
+  }
+
+  function showScreen(screenId) {
+    clearInterval(timerInterval);
+    document.getElementById('start-screen').classList.add('hidden');
+    document.getElementById('archive-screen').classList.add('hidden');
+    document.getElementById('play-screen').classList.add('hidden');
+    document.getElementById('end-screen').classList.add('hidden');
+    document.getElementById('submit-screen').classList.add('hidden');
+    document.getElementById('leaderboard-screen').classList.add('hidden');
+    document.getElementById('mod-screen').classList.add('hidden');
+
+    document.getElementById(screenId).classList.remove('hidden');
+  }
+
+  function showStartScreen() { showScreen('start-screen'); }
+
+  function openArchive() {
+    showScreen('archive-screen');
+    const archiveList = document.getElementById('archive-list');
+    archiveList.innerHTML = '';
+
+    const pastPuzzles = Object.keys(dailyQuestions)
+      .map(Number)
+      .filter(pKey => pKey < rawDayNumber)
+      .sort((a, b) => b - a);
+
+    if (pastPuzzles.length === 0) {
+      archiveList.innerHTML = '<p style="color: #555;">No past puzzles available yet! Check back tomorrow.</p>';
+    } else {
+      pastPuzzles.forEach(pKey => {
+        const btn = document.createElement('button');
+        btn.innerText = `Puzzle ${pKey}`;
+        btn.style.marginBottom = "8px";
+        btn.style.width = "100%";
+        btn.addEventListener('click', () => loadGame(pKey, pKey, false));
+        archiveList.appendChild(btn);
+      });
+    }
+  }
+
+  function startDailyGame() {
+    loadGame(todayKey, rawDayNumber, true);
+  }
+
+  function loadGame(qKey, displayPuzzleNum, isToday) {
+    activePuzzleNumber = displayPuzzleNum;
+    isTodayPlay = isToday;
+    questions = dailyQuestions[qKey] || dailyQuestions[1];
+    currentQuestionIndex = 0;
+    score = 0;
+    userAnswersLog = [];
+    showScreen('play-screen');
+    startQuestion();
+  }
+
+  function startQuestion() {
+    if (currentQuestionIndex >= questions.length) {
+      showScreen('end-screen');
+      showEndScreen();
+      return;
+    }
+
+    canAnswer = true;
+    document.getElementById('feedback').innerText = '';
+
+    const currentData = questions[currentQuestionIndex];
+    const fakeAnswer = currentData.choices[0]; 
+
+    document.getElementById('question').innerText = `Find the fake ${currentData.category}:`;
+    
+    const shuffled = [...currentData.choices].sort(() => Math.random() - 0.5);
+
+    const optionsContainer = document.getElementById('options');
+    optionsContainer.innerHTML = '';
+
+    shuffled.forEach(choice => {
+      const btn = document.createElement('button');
+      btn.innerText = choice;
+      btn.addEventListener('click', () => selectAnswer(choice, fakeAnswer, currentData));
+      optionsContainer.appendChild(btn);
+    });
+
+    resetTimer();
+  }
+
+  function resetTimer() {
+    clearInterval(timerInterval);
+    timeLeft = 30;
+    document.getElementById('timer').innerText = `Time: ${timeLeft}s`;
+
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      document.getElementById('timer').innerText = `Time: ${timeLeft}s`;
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        handleTimeout(questions[currentQuestionIndex]);
+      }
+    }, 1000);
+  }
+
+  function handleTimeout(currentData) {
+    if (!canAnswer) return;
+    canAnswer = false;
+
+    userAnswersLog.push({
+      category: currentData.category,
+      userChoice: "Time Ran Out ⏱️",
+      correctFake: currentData.choices[0],
+      isCorrect: false,
+      explanation: currentData.explanation
+    });
+
+    const feedback = document.getElementById('feedback');
+    feedback.innerText = `Time's Up! ❌ (${currentData.explanation})`;
+    feedback.className = "feedback-message wrong-text";
+
+    setTimeout(() => {
+      nextQuestion();
+    }, 2000);
+  }
+
+  function selectAnswer(selectedChoice, fakeAnswer, currentData) {
+    if (!canAnswer) return;
+    canAnswer = false;
+    clearInterval(timerInterval);
+
+    const isCorrect = (selectedChoice === fakeAnswer);
+
+    userAnswersLog.push({
+      category: currentData.category,
+      userChoice: selectedChoice,
+      correctFake: fakeAnswer,
+      isCorrect: isCorrect,
+      explanation: currentData.explanation
+    });
+
+    const feedback = document.getElementById('feedback');
+
+    if (isCorrect) {
+      score++;
+      feedback.innerText = "Correct!";
+      feedback.className = "feedback-message correct-text";
+      setTimeout(() => {
+        nextQuestion();
+      }, 1000);
+    } else {
+      feedback.innerText = `Wrong! ❌ (${currentData.explanation})`;
+      feedback.className = "feedback-message wrong-text";
+      setTimeout(() => {
+        nextQuestion();
+      }, 2500);
+    }
+  }
+
+  function nextQuestion() {
+    currentQuestionIndex++;
+    startQuestion();
+  }
+
+  function showEndScreen() {
+    document.getElementById('end-title').innerText = `Puzzle #${activePuzzleNumber} Complete!`;
+    document.getElementById('final-score').innerText = `You scored ${score} out of ${questions.length}!`;
+    document.getElementById('rank-display').innerText = getRankTitle(score, questions.length);
+
+    const lbSection = document.getElementById('lb-submit-section');
+    if (isTodayPlay) {
+      lbSection.classList.remove('hidden');
+      document.getElementById('lb-nickname').value = '';
+    } else {
+      lbSection.classList.add('hidden');
+    }
+
+    const breakdownContainer = document.getElementById('results-breakdown');
+    breakdownContainer.innerHTML = '';
+
+    userAnswersLog.forEach((item, index) => {
+      const div = document.createElement('div');
+      div.className = 'result-item';
+
+      const statusText = item.isCorrect 
+        ? `<span class="user-ans user-correct">Correct ✓</span>` 
+        : `<span class="user-ans user-wrong">Wrong ✗</span>`;
+
+      div.innerHTML = `
+        <div class="result-item-title">Q${index + 1}: ${item.category} (${statusText})</div>
+        <div>Your choice: <strong>${item.userChoice}</strong></div>
+        ${!item.isCorrect ? `<div>Correct fake: <strong>${item.correctFake}</strong></div>` : ''}
+        <div style="font-size: 0.8rem; color: #555;">Note: ${item.explanation}</div>
+      `;
+
+      breakdownContainer.appendChild(div);
+    });
+  }
+
+  function shareScore() {
+    const squares = userAnswersLog.map(item => item.isCorrect ? "🟩" : "🟥").join("");
+    const rank = getRankTitle(score, questions.length);
+    const shareText = `MoldyPickle - Puzzle #${activePuzzleNumber}\nScore: ${score}/${questions.length} 🥒\n${squares}\n${rank}\n\nPlay at: https://moldypickle.com`;
+
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(shareText).then(() => {
+        showToast();
+      }).catch(() => {
+        alert(shareText);
+      });
+    } else {
+      alert(shareText);
+    }
+  }
+
+  function showToast() {
+    const toast = document.getElementById('toast-msg');
+    toast.classList.remove('hidden');
+    setTimeout(() => {
+      toast.classList.add('hidden');
+    }, 2000);
+  }
+
+  // --- LEADERBOARD LOGIC ---
+  function openLeaderboard() {
+    showScreen('leaderboard-screen');
+    switchLbTab('today');
+  }
+
+  window.switchLbTab = function(tab) {
+    document.getElementById('tab-today').className = "tab-btn" + (tab === 'today' ? " active" : "");
+    document.getElementById('tab-weekly').className = "tab-btn" + (tab === 'weekly' ? " active" : "");
+    document.getElementById('tab-all').className = "tab-btn" + (tab === 'all' ? " active" : "");
+
+    const container = document.getElementById('lb-list-content');
+    let scores = JSON.parse(localStorage.getItem('moldy_leaderboard') || '[]');
+    const now = Date.now();
+
+    if (tab === 'today') {
+      const oneDay = 86400000;
+      scores = scores.filter(s => (now - s.timestamp) < oneDay);
+    } else if (tab === 'weekly') {
+      const oneWeek = 7 * 86400000;
+      scores = scores.filter(s => (now - s.timestamp) < oneWeek);
+    }
+
+    scores.sort((a, b) => b.score - a.score || a.timestamp - b.timestamp);
+
+    if (scores.length === 0) {
+      container.innerHTML = '<p style="color: #666; text-align: center; padding: 20px;">No scores recorded yet!</p>';
+      return;
+    }
+
+    container.innerHTML = '';
+    scores.forEach((entry, idx) => {
+      const row = document.createElement('div');
+      row.className = 'lb-row';
+      row.innerHTML = `<span>#${idx + 1} <strong>${entry.name}</strong></span> <span><strong>${entry.score}</strong> pts</span>`;
+      container.appendChild(row);
+    });
+  };
+
+  function submitScoreToLeaderboard() {
+    const name = document.getElementById('lb-nickname').value.trim() || "Anonymous Pickle";
+    const newEntry = {
+      name: name,
+      score: score,
+      timestamp: Date.now()
+    };
+
+    let scores = JSON.parse(localStorage.getItem('moldy_leaderboard') || '[]');
+    scores.push(newEntry);
+    localStorage.setItem('moldy_leaderboard', JSON.stringify(scores));
+
+    alert("Score submitted to today's leaderboard! 🏆");
+    document.getElementById('lb-submit-section').classList.add('hidden');
+    openLeaderboard();
+  }
+
+  // --- QUESTION SUBMISSION LOGIC ---
+  function openSubmitScreen() {
+    document.getElementById('sub-author').value = '';
+    document.getElementById('sub-category').value = '';
+    document.getElementById('sub-fake').value = '';
+    document.getElementById('sub-real1').value = '';
+    document.getElementById('sub-real2').value = '';
+    document.getElementById('sub-real3').value = '';
+    document.getElementById('sub-explanation').value = '';
+    showScreen('submit-screen');
+  }
+
+  function saveUserSubmission() {
+    const author = document.getElementById('sub-author').value.trim() || "Anonymous Pickle";
+    const category = document.getElementById('sub-category').value.trim();
+    const fake = document.getElementById('sub-fake').value.trim();
+    const r1 = document.getElementById('sub-real1').value.trim();
+    const r2 = document.getElementById('sub-real2').value.trim();
+    const r3 = document.getElementById('sub-real3').value.trim();
+    const exp = document.getElementById('sub-explanation').value.trim();
+
+    if (!category || !fake || !r1 || !r2 || !r3) {
+      alert("Please fill out the category, fake answer, and all 3 real answers!");
+      return;
+    }
+
+    const newQ = {
+      author: author,
+      category: category,
+      choices: [fake, r1, r2, r3],
+      explanation: exp || "Submitted by player"
+    };
+
+    let existingSubmissions = JSON.parse(localStorage.getItem('moldy_submissions') || '[]');
+    existingSubmissions.push(newQ);
+    localStorage.setItem('moldy_submissions', JSON.stringify(existingSubmissions));
+
+    alert("Question submitted successfully! Thanks for helping out 🥒");
+    showStartScreen();
+  }
+
+  // --- MODERATOR PANEL LOGIC ---
+  let currentModTab = 'subs';
+
+  function openModPortal() {
+    const code = prompt("Enter Moderator Code:");
+    if (code === "pickle67") {
+      loadModDashboard();
+      showScreen('mod-screen');
+    } else if (code !== null) {
+      alert("Incorrect mod code!");
+    }
+  }
+
+  window.switchModTab = function(tab) {
+    currentModTab = tab;
+    document.getElementById('mod-tab-sub').className = "tab-btn" + (tab === 'subs' ? " active" : "");
+    document.getElementById('mod-tab-lb').className = "tab-btn" + (tab === 'lb' ? " active" : "");
+    loadModDashboard();
+  };
+
+  function loadModDashboard() {
+    const container = document.getElementById('mod-content');
+    container.innerHTML = '';
+
+    if (currentModTab === 'subs') {
+      let submissions = JSON.parse(localStorage.getItem('moldy_submissions') || '[]');
+      if (submissions.length === 0) {
+        container.innerHTML = '<p style="color: #666;">No player submissions waiting right now.</p>';
+        return;
+      }
+
+      submissions.forEach((q, idx) => {
+        const box = document.createElement('div');
+        box.style.border = "1px solid #000";
+        box.style.padding = "8px";
+        box.style.marginBottom = "8px";
+        box.style.background = "#f9f9f9";
+
+        box.innerHTML = `
+          <div><strong>By:</strong> ${q.author}</div>
+          <div><strong>Category:</strong> ${q.category}</div>
+          <div style="color: #cc0000;"><strong>Fake:</strong> ${q.choices[0]}</div>
+          <div style="color: #008000;"><strong>Real:</strong> ${q.choices[1]}, ${q.choices[2]}, ${q.choices[3]}</div>
+          <br>
+          <button onclick="approveSub(${idx})" style="background: #008000; color: #fff; padding: 4px 8px; font-size: 0.8rem;">Approve to Day 1</button>
+          <button onclick="deleteSub(${idx})" style="background: #cc0000; color: #fff; padding: 4px 8px; font-size: 0.8rem;">Delete</button>
+        `;
+        container.appendChild(box);
+      });
+    } else {
+      let scores = JSON.parse(localStorage.getItem('moldy_leaderboard') || '[]');
+      if (scores.length === 0) {
+        container.innerHTML = '<p style="color: #666;">No leaderboard scores recorded.</p>';
+        return;
+      }
+
+      scores.forEach((s, idx) => {
+        const box = document.createElement('div');
+        box.style.border = "1px solid #000";
+        box.style.padding = "8px";
+        box.style.marginBottom = "8px";
+        box.style.background = "#fff";
+        box.style.display = "flex";
+        box.style.justifyContent = "space-between";
+        box.style.alignItems = "center";
+
+        box.innerHTML = `
+          <div><strong>${s.name}</strong> - ${s.score} pts</div>
+          <button onclick="deleteLbScore(${idx})" style="background: #cc0000; color: #fff; padding: 4px 8px; font-size: 0.8rem;">Remove</button>
+        `;
+        container.appendChild(box);
+      });
+    }
+  }
+
+  window.approveSub = function(index) {
+    let submissions = JSON.parse(localStorage.getItem('moldy_submissions') || '[]');
+    const approvedQ = submissions[index];
+    if (!dailyQuestions[1]) dailyQuestions[1] = [];
+    dailyQuestions[1].push(approvedQ);
+    submissions.splice(index, 1);
+    localStorage.setItem('moldy_submissions', JSON.stringify(submissions));
+    alert("Approved and added to Day 1!");
+    loadModDashboard();
+  };
+
+  window.deleteSub = function(index) {
+    let submissions = JSON.parse(localStorage.getItem('moldy_submissions') || '[]');
+    submissions.splice(index, 1);
+    localStorage.setItem('moldy_submissions', JSON.stringify(submissions));
+    loadModDashboard();
+  };
+
+  window.deleteLbScore = function(index) {
+    let scores = JSON.parse(localStorage.getItem('moldy_leaderboard') || '[]');
+    scores.splice(index, 1);
+    localStorage.setItem('moldy_leaderboard', JSON.stringify(scores));
+    loadModDashboard();
+  };
+
+  window.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('play-today-btn').addEventListener('click', startDailyGame);
+    document.getElementById('open-archive-btn').addEventListener('click', openArchive);
+    document.getElementById('archive-back-btn').addEventListener('click', showStartScreen);
+    document.getElementById('share-btn').addEventListener('click', shareScore);
+    document.getElementById('end-menu-btn').addEventListener('click', showStartScreen);
+
+    // Leaderboard buttons
+    document.getElementById('open-lb-from-menu').addEventListener('click', openLeaderboard);
+    document.getElementById('lb-back-btn').addEventListener('click', showStartScreen);
+    document.getElementById('lb-submit-btn').addEventListener('click', submitScoreToLeaderboard);
+
+    // Submission buttons
+    document.getElementById('open-submit-from-menu').addEventListener('click', openSubmitScreen);
+    document.getElementById('submit-save-btn').addEventListener('click', saveUserSubmission);
+    document.getElementById('submit-back-btn').addEventListener('click', showStartScreen);
+
+    // Mod button
+    document.getElementById('mod-portal-btn').addEventListener('click', openModPortal);
+    document.getElementById('mod-back-btn').addEventListener('click', showStartScreen);
+  });
+</script>
+
+</body>
+</html>

@@ -10,7 +10,9 @@
     {
       "username": "amethyst2254",
       "password": "Marley2011",
-      "submittedPuzzles": []
+      "submittedPuzzles": [
+        38
+      ]
     },
     {
       "username": "lava south",
@@ -29,6 +31,12 @@
       "puzzle": 38,
       "score": 800,
       "timestamp": 1794515327128
+    },
+    {
+      "username": "amethyst2254",
+      "puzzle": 38,
+      "score": 1080,
+      "timestamp": 1794515498270
     }
   ]
 }

@@ -43,7 +43,9 @@
     {
       "username": "dark eggman",
       "password": "6767",
-      "submittedPuzzles": []
+      "submittedPuzzles": [
+        38
+      ]
     }
   ],
   "scores": [
@@ -76,6 +78,12 @@
       "puzzle": 38,
       "score": 700,
       "timestamp": 1794515623149
+    },
+    {
+      "username": "dark eggman",
+      "puzzle": 38,
+      "score": 2200,
+      "timestamp": 1794515861209
     }
   ]
 }

@@ -3,8 +3,17 @@
     {
       "username": "chewamma bumface",
       "password": "pickle67",
-      "submittedPuzzles": []
+      "submittedPuzzles": [
+        38
+      ]
     }
   ],
-  "scores": []
+  "scores": [
+    {
+      "username": "chewamma bumface",
+      "puzzle": 38,
+      "score": 800,
+      "timestamp": 1794515327128
+    }
+  ]
 }

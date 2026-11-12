@@ -24,7 +24,9 @@
     {
       "username": "chunky pooping",
       "password": "I am the best",
-      "submittedPuzzles": []
+      "submittedPuzzles": [
+        38
+      ]
     }
   ],
   "scores": [
@@ -45,6 +47,12 @@
       "puzzle": 38,
       "score": 1460,
       "timestamp": 1794515506550
+    },
+    {
+      "username": "chunky pooping",
+      "puzzle": 38,
+      "score": 2470,
+      "timestamp": 1794515551082
     }
   ]
 }

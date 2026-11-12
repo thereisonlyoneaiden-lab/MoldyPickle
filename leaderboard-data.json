@@ -36,7 +36,9 @@
     {
       "username": "David",
       "password": "jeremy4125",
-      "submittedPuzzles": []
+      "submittedPuzzles": [
+        38
+      ]
     }
   ],
   "scores": [
@@ -63,6 +65,12 @@
       "puzzle": 38,
       "score": 2470,
       "timestamp": 1794515551082
+    },
+    {
+      "username": "David",
+      "puzzle": 38,
+      "score": 700,
+      "timestamp": 1794515623149
     }
   ]
 }

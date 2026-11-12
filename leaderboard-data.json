@@ -17,7 +17,9 @@
     {
       "username": "lava south",
       "password": "moldy",
-      "submittedPuzzles": []
+      "submittedPuzzles": [
+        38
+      ]
     },
     {
       "username": "chunky pooping",
@@ -37,6 +39,12 @@
       "puzzle": 38,
       "score": 1080,
       "timestamp": 1794515498270
+    },
+    {
+      "username": "lava south",
+      "puzzle": 38,
+      "score": 1460,
+      "timestamp": 1794515506550
     }
   ]
 }

@@ -1,4 +1,10 @@
 {
-  "users": [],
+  "users": [
+    {
+      "username": "chewamma bumface",
+      "password": "pickle67",
+      "submittedPuzzles": []
+    }
+  ],
   "scores": []
 }

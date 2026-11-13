@@ -57,7 +57,9 @@
     {
       "username": "slothy potato",
       "password": "aidenlovesdih",
-      "submittedPuzzles": []
+      "submittedPuzzles": [
+        38
+      ]
     }
   ],
   "scores": [
@@ -102,6 +104,12 @@
       "puzzle": 38,
       "score": 1440,
       "timestamp": 1794572628271
+    },
+    {
+      "username": "slothy potato",
+      "puzzle": 38,
+      "score": 2670,
+      "timestamp": 1794583210218
     }
   ]
 }

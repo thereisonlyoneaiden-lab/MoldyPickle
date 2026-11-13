@@ -31,7 +31,9 @@
     {
       "username": "Isaac coc",
       "password": "xoztez-1gexdA-mivwav",
-      "submittedPuzzles": []
+      "submittedPuzzles": [
+        38
+      ]
     },
     {
       "username": "David",
@@ -136,6 +138,12 @@
       "puzzle": 38,
       "score": 2720,
       "timestamp": 1794583412056
+    },
+    {
+      "username": "Isaac coc",
+      "puzzle": 38,
+      "score": 2220,
+      "timestamp": 1794583788006
     }
   ]
 }

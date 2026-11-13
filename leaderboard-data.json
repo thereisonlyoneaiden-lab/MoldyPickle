@@ -64,7 +64,9 @@
     {
       "username": "Aidenlovesdih",
       "password": "ok",
-      "submittedPuzzles": []
+      "submittedPuzzles": [
+        38
+      ]
     }
   ],
   "scores": [
@@ -115,6 +117,12 @@
       "puzzle": 38,
       "score": 2670,
       "timestamp": 1794583210218
+    },
+    {
+      "username": "Aidenlovesdih",
+      "puzzle": 38,
+      "score": 2500,
+      "timestamp": 1794583332334
     }
   ]
 }

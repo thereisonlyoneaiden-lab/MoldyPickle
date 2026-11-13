@@ -71,7 +71,9 @@
     {
       "username": "MoldypickleCEO",
       "password": "CEO",
-      "submittedPuzzles": []
+      "submittedPuzzles": [
+        38
+      ]
     }
   ],
   "scores": [
@@ -128,6 +130,12 @@
       "puzzle": 38,
       "score": 2500,
       "timestamp": 1794583332334
+    },
+    {
+      "username": "MoldypickleCEO",
+      "puzzle": 38,
+      "score": 2720,
+      "timestamp": 1794583412056
     }
   ]
 }

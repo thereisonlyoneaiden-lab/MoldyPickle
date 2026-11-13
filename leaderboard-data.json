@@ -80,7 +80,9 @@
     {
       "username": "Roshan is super cool in aids",
       "password": "buxgaw-Foczu0-cuwcym",
-      "submittedPuzzles": []
+      "submittedPuzzles": [
+        38
+      ]
     }
   ],
   "scores": [
@@ -149,6 +151,12 @@
       "puzzle": 38,
       "score": 2220,
       "timestamp": 1794583788006
+    },
+    {
+      "username": "Roshan is super cool in aids",
+      "puzzle": 38,
+      "score": 2700,
+      "timestamp": 1794589626217
     }
   ]
 }

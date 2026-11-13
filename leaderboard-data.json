@@ -50,7 +50,9 @@
     {
       "username": "Asianboynoel",
       "password": "nensed-suxsuq-jetJa9",
-      "submittedPuzzles": []
+      "submittedPuzzles": [
+        38
+      ]
     }
   ],
   "scores": [
@@ -89,6 +91,12 @@
       "puzzle": 38,
       "score": 2200,
       "timestamp": 1794515861209
+    },
+    {
+      "username": "Asianboynoel",
+      "puzzle": 38,
+      "score": 1440,
+      "timestamp": 1794572628271
     }
   ]
 }

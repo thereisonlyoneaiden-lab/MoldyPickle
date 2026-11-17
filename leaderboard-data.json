@@ -629,6 +629,18 @@
       "explanation": "what good would strength do for a scrawny boy like link??",
       "credit": "juicy pickle (yummmm)",
       "timestamp": 1794933042447
+    },
+    {
+      "category": "DCEU movie",
+      "choices": [
+        "Supergirl",
+        "Flash",
+        "Justice league",
+        "Shazam"
+      ],
+      "explanation": "is a DCU movie",
+      "credit": "Marc",
+      "timestamp": 1794940945751
     }
   ],
   "banned": [

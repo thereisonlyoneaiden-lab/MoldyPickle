@@ -690,6 +690,18 @@
       "explanation": "Not a moldy pickle feature",
       "credit": "Chlorine pooping",
       "timestamp": 1794949493834
+    },
+    {
+      "category": "Which of these games do not have over 90 on metacritic",
+      "choices": [
+        "Fallout",
+        "Crash bandicoot warped",
+        "Grand theft auto IV",
+        "God of war"
+      ],
+      "explanation": "Fallout has 89",
+      "credit": "Chlorine pooping",
+      "timestamp": 1794949830422
     }
   ],
   "banned": [

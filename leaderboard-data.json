@@ -659,6 +659,18 @@
       "explanation": "is a DCU movie",
       "credit": "Marc",
       "timestamp": 1794940945751
+    },
+    {
+      "category": "Who is the real moldy pickle?",
+      "choices": [
+        "Moldy cucumber",
+        "Picklerick",
+        "MoldypickleCEO",
+        "MoldyAiden"
+      ],
+      "explanation": "Ummmm because.",
+      "credit": "Jamal Cucumber",
+      "timestamp": 1794949179270
     }
   ],
   "banned": [

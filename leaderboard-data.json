@@ -787,6 +787,18 @@
       "explanation": "Fallout has 89",
       "credit": "Chlorine pooping",
       "timestamp": 1794949830422
+    },
+    {
+      "category": "Find the fake nation that was in WW1",
+      "choices": [
+        "Kingdom of Spain",
+        "Empire of Japan",
+        "Republic of Brazil",
+        "Austro-Hungarian Empire"
+      ],
+      "explanation": "Spain was neutral in WW1",
+      "credit": "David",
+      "timestamp": 1795104195307
     }
   ],
   "banned": [

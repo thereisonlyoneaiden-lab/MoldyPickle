@@ -863,6 +863,18 @@
       "explanation": "Spain was neutral in WW1",
       "credit": "David",
       "timestamp": 1795104195307
+    },
+    {
+      "category": "Find the fake B",
+      "choices": [
+        "Wasp",
+        "Bee",
+        "B",
+        "Bumblebee"
+      ],
+      "explanation": "Because it is not a bee",
+      "credit": "James P",
+      "timestamp": 1795104934008
     }
   ],
   "banned": [

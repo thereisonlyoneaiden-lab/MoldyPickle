@@ -1284,6 +1284,18 @@
       "explanation": "Counties don't have warts",
       "credit": "David",
       "timestamp": 1795106232111
+    },
+    {
+      "category": "Find the fake cricket bat",
+      "choices": [
+        "Eagle",
+        "Kookaburra",
+        "Hawk",
+        "Long eared bat"
+      ],
+      "explanation": "It is not a cricket bat",
+      "credit": "James 180",
+      "timestamp": 1795124572953
     }
   ],
   "banned": [

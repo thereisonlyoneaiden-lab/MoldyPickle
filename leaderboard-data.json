@@ -1296,6 +1296,18 @@
       "explanation": "It is not a cricket bat",
       "credit": "James 180",
       "timestamp": 1795124572953
+    },
+    {
+      "category": "Type of J20 drink",
+      "choices": [
+        "Apple and strawberry",
+        "Orange and passion fruit",
+        "Apple and Raspberry",
+        "Apple and mango"
+      ],
+      "explanation": "It is",
+      "credit": "James 180",
+      "timestamp": 1795124780540
     }
   ],
   "banned": [

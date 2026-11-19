@@ -1127,6 +1127,18 @@
       "explanation": "Because it is not a bee",
       "credit": "James P",
       "timestamp": 1795104934008
+    },
+    {
+      "category": "Find the fake British county",
+      "choices": [
+        "Renning & Watford",
+        "Hertfordshire",
+        "Dumfries & Galloway",
+        "Pembrokeshire"
+      ],
+      "explanation": "Counties don't have warts",
+      "credit": "David",
+      "timestamp": 1795106232111
     }
   ],
   "banned": [

@@ -1461,6 +1461,18 @@
       "explanation": "Kentucky green is actually called kentucky bleu",
       "credit": "TheBigK",
       "timestamp": 1795164008486
+    },
+    {
+      "category": "Find the fake Mr Ward quote",
+      "choices": [
+        "'Cheeky bit of ai'",
+        "'Techno skills'",
+        "'My voice went a bit high but I think I got away with it'",
+        "'Cheeky little clip'"
+      ],
+      "explanation": "It's not a Mr ward quote and you should have known that",
+      "credit": "David",
+      "timestamp": 1795200423248
     }
   ],
   "banned": [

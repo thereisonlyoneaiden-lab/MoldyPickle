@@ -1557,6 +1557,18 @@
       "explanation": "It's not a Mr ward quote and you should have known that",
       "credit": "David",
       "timestamp": 1795200423248
+    },
+    {
+      "category": "Find the Fake Leader of the People's Republic of China",
+      "choices": [
+        "Tô Lâm",
+        "Xi Jinping",
+        "Jiang Zemin",
+        "Mao Zadong"
+      ],
+      "explanation": "Tô Lâm is the Leader of Vietnam",
+      "credit": "David",
+      "timestamp": 1795214315346
     }
   ],
   "banned": [

@@ -1421,6 +1421,18 @@
       "explanation": "It is",
       "credit": "James 180",
       "timestamp": 1795124780540
+    },
+    {
+      "category": "Find the fake type of grass",
+      "choices": [
+        "Kentucky Green",
+        "Bahia",
+        "Rye",
+        "Carpet"
+      ],
+      "explanation": "Kentucky green is actually called kentucky bleu",
+      "credit": "TheBigK",
+      "timestamp": 1795164008486
     }
   ],
   "banned": [

@@ -1861,6 +1861,18 @@
       "explanation": "It is",
       "credit": "James p",
       "timestamp": 1795268700024
+    },
+    {
+      "category": "Type of fish",
+      "choices": [
+        "Dolphin",
+        "Perch",
+        "Carp",
+        "Shark"
+      ],
+      "explanation": "It is",
+      "credit": "James",
+      "timestamp": 1795268827374
     }
   ],
   "banned": [

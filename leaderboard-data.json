@@ -1897,6 +1897,18 @@
       "explanation": "It is",
       "credit": "James",
       "timestamp": 1795269094783
+    },
+    {
+      "category": "Best day of the year",
+      "choices": [
+        "Your birthday",
+        "Christmas eve",
+        "New years eve",
+        "Boxing day"
+      ],
+      "explanation": "It is",
+      "credit": "James P",
+      "timestamp": 1795269163877
     }
   ],
   "banned": [

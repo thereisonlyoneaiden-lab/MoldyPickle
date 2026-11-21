@@ -1849,6 +1849,18 @@
       "explanation": "It is in republic of Ireland",
       "credit": "James p",
       "timestamp": 1795268652690
+    },
+    {
+      "category": "Speed limits",
+      "choices": [
+        "25mph",
+        "30mph",
+        "60mph",
+        "70mph"
+      ],
+      "explanation": "It is",
+      "credit": "James p",
+      "timestamp": 1795268700024
     }
   ],
   "banned": [

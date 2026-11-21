@@ -1921,6 +1921,18 @@
       "explanation": "It is",
       "credit": "James P",
       "timestamp": 1795269360870
+    },
+    {
+      "category": "Find the Fake game made by Paradox Interactive",
+      "choices": [
+        "Cities Skylines",
+        "Hearts of Iron IV",
+        "Crusader Kings 3",
+        "Victoria 3"
+      ],
+      "explanation": "It was released by Paradox but not made by them",
+      "credit": "Big David",
+      "timestamp": 1795298958079
     }
   ],
   "banned": [

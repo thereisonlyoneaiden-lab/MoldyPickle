@@ -1873,6 +1873,18 @@
       "explanation": "It is",
       "credit": "James",
       "timestamp": 1795268827374
+    },
+    {
+      "category": "Type of water",
+      "choices": [
+        "Pool",
+        "Fresh",
+        "Salt",
+        "Sea"
+      ],
+      "explanation": "It is",
+      "credit": "James",
+      "timestamp": 1795268949267
     }
   ],
   "banned": [

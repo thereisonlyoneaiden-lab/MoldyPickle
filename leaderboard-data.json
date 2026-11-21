@@ -1909,6 +1909,18 @@
       "explanation": "It is",
       "credit": "James P",
       "timestamp": 1795269163877
+    },
+    {
+      "category": "Song",
+      "choices": [
+        "Waterfall",
+        "Hometown glory",
+        "Dreams",
+        "Heat waves"
+      ],
+      "explanation": "It is",
+      "credit": "James P",
+      "timestamp": 1795269360870
     }
   ],
   "banned": [

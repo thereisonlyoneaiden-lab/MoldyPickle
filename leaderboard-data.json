@@ -1885,6 +1885,18 @@
       "explanation": "It is",
       "credit": "James",
       "timestamp": 1795268949267
+    },
+    {
+      "category": "Fake professional dart player",
+      "choices": [
+        "Ronaldo",
+        "Luke Littler",
+        "James Patrick",
+        "Steven bunting"
+      ],
+      "explanation": "It is",
+      "credit": "James",
+      "timestamp": 1795269094783
     }
   ],
   "banned": [

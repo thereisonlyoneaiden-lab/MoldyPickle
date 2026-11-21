@@ -1818,6 +1818,18 @@
       "explanation": "Tô Lâm is the Leader of Vietnam",
       "credit": "David",
       "timestamp": 1795214315346
+    },
+    {
+      "category": "Country in scandanavia",
+      "choices": [
+        "Iceland",
+        "Denmark",
+        "Sweden",
+        "Norwayq"
+      ],
+      "explanation": "It is",
+      "credit": "James P",
+      "timestamp": 1795268499130
     }
   ],
   "banned": [

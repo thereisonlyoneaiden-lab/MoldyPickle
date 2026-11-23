@@ -2171,6 +2171,18 @@
       "explanation": "Should be as famous as Christmas",
       "credit": "Chlorine pooping",
       "timestamp": 1795471776127
+    },
+    {
+      "category": "Chicken",
+      "choices": [
+        "Picky Sticky Chicken",
+        "Kentucky Fried Chicken",
+        "Big Daddies Chicken",
+        "Fatty Fatty Big Backy Chicken"
+      ],
+      "explanation": "Picky Sticky Chicken isn't a real brand",
+      "credit": "William Faulkner",
+      "timestamp": 1795473439392
     }
   ],
   "banned": [

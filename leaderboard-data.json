@@ -2140,6 +2140,18 @@
       "explanation": "Never a Halloween reskin (a Christmas one tho)",
       "credit": "Chlorine pooping",
       "timestamp": 1795470495104
+    },
+    {
+      "category": "Fake island",
+      "choices": [
+        "Halloween island",
+        "Christmas Island",
+        "Easter island",
+        "Ascension island"
+      ],
+      "explanation": "Not a real island",
+      "credit": "Chlorine pooping",
+      "timestamp": 1795471396272
     }
   ],
   "banned": [

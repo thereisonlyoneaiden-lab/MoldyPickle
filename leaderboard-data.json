@@ -2079,6 +2079,18 @@
       "explanation": "It was released by Paradox but not made by them",
       "credit": "Big David",
       "timestamp": 1795298958079
+    },
+    {
+      "category": "Fake moldy pickle update",
+      "choices": [
+        "Halloween update",
+        "Leaderboard",
+        "Account",
+        "Graphic"
+      ],
+      "explanation": "Never a Halloween reskin (a Christmas one tho)",
+      "credit": "Chlorine pooping",
+      "timestamp": 1795470495104
     }
   ],
   "banned": [

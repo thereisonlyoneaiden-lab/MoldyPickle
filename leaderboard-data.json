@@ -2303,6 +2303,18 @@
       "explanation": "Spain was in a DLC",
       "credit": "The Civ addict",
       "timestamp": 1795554089303
+    },
+    {
+      "category": "Islands bigger than 25 square miles",
+      "choices": [
+        "North sentinel island",
+        "Malta",
+        "Isle of wight",
+        "Nuie"
+      ],
+      "explanation": "North small island",
+      "credit": "George Cooper",
+      "timestamp": 1795554221331
     }
   ],
   "banned": [

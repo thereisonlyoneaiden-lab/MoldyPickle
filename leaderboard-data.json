@@ -2267,6 +2267,18 @@
       "explanation": "Picky Sticky Chicken isn't a real brand",
       "credit": "William Faulkner",
       "timestamp": 1795473439392
+    },
+    {
+      "category": "vanilla Civ V nations",
+      "choices": [
+        "Spain",
+        "Netherlands",
+        "America",
+        "Sweden"
+      ],
+      "explanation": "Spain is in a DLC",
+      "credit": "The Civ V addict",
+      "timestamp": 1795553890997
     }
   ],
   "banned": [

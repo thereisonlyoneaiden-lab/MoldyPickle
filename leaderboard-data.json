@@ -2291,6 +2291,18 @@
       "explanation": "maybe put some flair in your answers next time",
       "credit": "14 Lawley Way's Paper Boy",
       "timestamp": 1795553981213
+    },
+    {
+      "category": "Civ V Vanilla nations",
+      "choices": [
+        "Spain",
+        "America",
+        "England",
+        "Siam"
+      ],
+      "explanation": "Spain was in a DLC",
+      "credit": "The Civ addict",
+      "timestamp": 1795554089303
     }
   ],
   "banned": [

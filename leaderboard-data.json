@@ -2315,6 +2315,18 @@
       "explanation": "North small island",
       "credit": "George Cooper",
       "timestamp": 1795554221331
+    },
+    {
+      "category": "dinosaur",
+      "choices": [
+        "paleofraggleosaurus",
+        "tyrannosaurus",
+        "stegosaurus",
+        "triceratops"
+      ],
+      "explanation": "paleofraggleosaurus is a doggy",
+      "credit": "lord pickle",
+      "timestamp": 1795554264658
     }
   ],
   "banned": [

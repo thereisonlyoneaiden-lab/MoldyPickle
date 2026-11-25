@@ -80,7 +80,9 @@
         "char_void"
       ],
       "equippedChar": "char_void",
-      "equippedAccs": [],
+      "equippedAccs": [
+        "acc_lasereyes"
+      ],
       "claimedAdvent": [
         1,
         2,

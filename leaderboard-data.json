@@ -62,7 +62,32 @@
     },
     {
       "username": "guacamole rainbows",
-      "code": "NFFND"
+      "code": "NFFND",
+      "coins": 5520,
+      "owned": [
+        "char_default",
+        "acc_none",
+        "acc_sunglasses",
+        "acc_glasses",
+        "acc_tophat",
+        "acc_crown"
+      ],
+      "equippedChar": "char_default",
+      "equippedAccs": [
+        "acc_crown"
+      ],
+      "claimedAdvent": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
     },
     {
       "username": "mrs mold",
@@ -2001,6 +2026,13 @@
       "puzzle": 49,
       "score": 710,
       "timestamp": 1795627388125
+    },
+    {
+      "code": "NFFND",
+      "username": "guacamole rainbows",
+      "puzzle": 51,
+      "score": 350,
+      "timestamp": 1795631290025
     }
   ],
   "submissions": [

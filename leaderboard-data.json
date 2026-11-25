@@ -77,7 +77,8 @@
         "char_santa",
         "acc_lollipop",
         "char_snowman",
-        "char_void"
+        "char_void",
+        "acc_mod_crown"
       ],
       "equippedChar": "char_void",
       "equippedAccs": [

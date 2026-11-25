@@ -185,6 +185,72 @@
     {
       "username": "moldy potato",
       "code": "TDAWQ"
+    },
+    {
+      "code": "AJEAD",
+      "username": "master powerman",
+      "coins": 3819,
+      "owned": [
+        "char_default",
+        "acc_none",
+        "acc_sunglasses",
+        "acc_glasses",
+        "acc_tophat",
+        "acc_crown",
+        "acc_carrot",
+        "acc_lasereyes",
+        "acc_redbelt",
+        "char_santa",
+        "acc_lollipop",
+        "char_snowman",
+        "char_void",
+        "acc_mod_crown"
+      ],
+      "equippedChar": "char_void",
+      "equippedAccs": [
+        "acc_sunglasses",
+        "acc_redbelt",
+        "acc_mod_crown"
+      ],
+      "claimedAdvent": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        20,
+        19,
+        18,
+        17,
+        16,
+        21,
+        22
+      ],
+      "legacyPointsConverted": true,
+      "puzzleRewards": {
+        "44": {
+          "score": 2560,
+          "coins": 853
+        },
+        "45": {
+          "score": 1770,
+          "coins": 590
+        },
+        "51": {
+          "score": 350,
+          "coins": 116
+        }
+      }
     }
   ],
   "scores": [

@@ -81,7 +81,8 @@
       ],
       "equippedChar": "char_void",
       "equippedAccs": [
-        "acc_sunglasses"
+        "acc_sunglasses",
+        "acc_none"
       ],
       "claimedAdvent": [
         1,

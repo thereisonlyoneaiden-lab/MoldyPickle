@@ -63,7 +63,7 @@
     {
       "username": "guacamole rainbows",
       "code": "NFFND",
-      "coins": 2259,
+      "coins": 3819,
       "owned": [
         "char_default",
         "acc_none",
@@ -109,7 +109,22 @@
         16,
         21,
         22
-      ]
+      ],
+      "legacyPointsConverted": true,
+      "puzzleRewards": {
+        "44": {
+          "score": 2560,
+          "coins": 853
+        },
+        "45": {
+          "score": 1770,
+          "coins": 590
+        },
+        "51": {
+          "score": 350,
+          "coins": 116
+        }
+      }
     },
     {
       "username": "mrs mold",

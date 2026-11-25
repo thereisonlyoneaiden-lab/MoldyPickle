@@ -63,7 +63,7 @@
     {
       "username": "guacamole rainbows",
       "code": "NFFND",
-      "coins": 8221,
+      "coins": 9221,
       "owned": [
         "char_default",
         "acc_none",
@@ -102,7 +102,9 @@
         19,
         18,
         17,
-        16
+        16,
+        21,
+        22
       ]
     },
     {

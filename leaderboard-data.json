@@ -79,7 +79,7 @@
         "char_snowman",
         "char_void"
       ],
-      "equippedChar": "char_default",
+      "equippedChar": "char_void",
       "equippedAccs": [
         "acc_crown"
       ],

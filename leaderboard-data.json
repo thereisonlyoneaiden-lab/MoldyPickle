@@ -2871,6 +2871,18 @@
       "explanation": "he survived :D",
       "credit": "lebron",
       "timestamp": 1795554404504
+    },
+    {
+      "category": "Find the fake gym equipment",
+      "choices": [
+        "Quad curls",
+        "Leg extension",
+        "Lat pulldown",
+        "Cross fit"
+      ],
+      "explanation": "It is not a real piece of equipment",
+      "credit": "Willham III",
+      "timestamp": 1795687331603
     }
   ],
   "banned": [

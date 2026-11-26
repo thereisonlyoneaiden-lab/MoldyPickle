@@ -2917,6 +2917,18 @@
       "explanation": "It is not a real piece of equipment",
       "credit": "Willham III",
       "timestamp": 1795687331603
+    },
+    {
+      "category": "Place in Scandinavia",
+      "choices": [
+        "Helsinki",
+        "Oslo",
+        "Copenhagen",
+        "Stockholm"
+      ],
+      "explanation": "It is",
+      "credit": "James P",
+      "timestamp": 1795705761559
     }
   ],
   "banned": [

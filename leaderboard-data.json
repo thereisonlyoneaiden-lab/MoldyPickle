@@ -2929,6 +2929,18 @@
       "explanation": "It is",
       "credit": "James P",
       "timestamp": 1795705761559
+    },
+    {
+      "category": "Ballon dor winner",
+      "choices": [
+        "Lewandowski",
+        "Captain kane",
+        "Ronaldo",
+        "Owen"
+      ],
+      "explanation": "It got cancelled when lewandowski should of won",
+      "credit": "James P",
+      "timestamp": 1795705812538
     }
   ],
   "banned": [

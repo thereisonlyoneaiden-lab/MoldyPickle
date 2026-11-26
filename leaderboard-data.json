@@ -2941,6 +2941,18 @@
       "explanation": "It got cancelled when lewandowski should of won",
       "credit": "James P",
       "timestamp": 1795705812538
+    },
+    {
+      "category": "Town jn England",
+      "choices": [
+        "Norwich",
+        "Ipswich",
+        "Shrewsbury",
+        "Northampton"
+      ],
+      "explanation": "It is",
+      "credit": "JAMES P",
+      "timestamp": 1795705889146
     }
   ],
   "banned": [

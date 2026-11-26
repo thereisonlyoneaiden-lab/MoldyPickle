@@ -2953,6 +2953,18 @@
       "explanation": "It is",
       "credit": "JAMES P",
       "timestamp": 1795705889146
+    },
+    {
+      "category": "Type of deer",
+      "choices": [
+        "Gazelle",
+        "Red",
+        "Moose",
+        "Fallow"
+      ],
+      "explanation": "It is",
+      "credit": "James P",
+      "timestamp": 1795706010898
     }
   ],
   "banned": [

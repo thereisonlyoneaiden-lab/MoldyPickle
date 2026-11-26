@@ -63,53 +63,13 @@
     {
       "username": "guacamole rainbows",
       "code": "NFFND",
-      "coins": 3819,
+      "coins": 1560,
       "owned": [
-        "char_default",
-        "acc_none",
-        "acc_sunglasses",
-        "acc_glasses",
-        "acc_tophat",
-        "acc_crown",
-        "acc_carrot",
-        "acc_lasereyes",
-        "acc_redbelt",
-        "char_santa",
-        "acc_lollipop",
-        "char_snowman",
-        "char_void",
-        "acc_mod_crown"
+        "char_default"
       ],
-      "equippedChar": "char_void",
-      "equippedAccs": [
-        "acc_sunglasses",
-        "acc_redbelt",
-        "acc_mod_crown"
-      ],
-      "claimedAdvent": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11,
-        12,
-        13,
-        14,
-        15,
-        20,
-        19,
-        18,
-        17,
-        16,
-        21,
-        22
-      ],
+      "equippedChar": "char_default",
+      "equippedAccs": [],
+      "claimedAdvent": [],
       "legacyPointsConverted": true,
       "puzzleRewards": {
         "44": {

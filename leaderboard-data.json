@@ -63,7 +63,7 @@
     {
       "username": "guacamole rainbows",
       "code": "NFFND",
-      "coins": 1560,
+      "coins": 2170,
       "owned": [
         "char_default"
       ],
@@ -83,6 +83,10 @@
         "51": {
           "score": 350,
           "coins": 116
+        },
+        "52": {
+          "score": 1830,
+          "coins": 610
         }
       }
     },
@@ -2421,6 +2425,13 @@
       "puzzle": 52,
       "score": 1510,
       "timestamp": 1795687169031
+    },
+    {
+      "code": "NFFND",
+      "username": "guacamole rainbows",
+      "puzzle": 52,
+      "score": 1830,
+      "timestamp": 1795688082434
     }
   ],
   "submissions": [

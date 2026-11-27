@@ -70,7 +70,8 @@
       ],
       "equippedChar": "char_default",
       "equippedAccs": [
-        "acc_redbelt"
+        "acc_redbelt",
+        "acc_mod_crown"
       ],
       "claimedAdvent": [],
       "legacyPointsConverted": true,

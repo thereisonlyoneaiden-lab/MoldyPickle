@@ -69,7 +69,9 @@
         "acc_redbelt"
       ],
       "equippedChar": "char_default",
-      "equippedAccs": [],
+      "equippedAccs": [
+        "acc_mod_crown"
+      ],
       "claimedAdvent": [],
       "legacyPointsConverted": true,
       "puzzleRewards": {

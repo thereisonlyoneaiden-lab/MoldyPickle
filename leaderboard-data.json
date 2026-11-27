@@ -65,7 +65,8 @@
       "code": "NFFND",
       "coins": 2170,
       "owned": [
-        "char_default"
+        "char_default",
+        "acc_redbelt"
       ],
       "equippedChar": "char_default",
       "equippedAccs": [],

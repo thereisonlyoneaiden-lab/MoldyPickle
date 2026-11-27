@@ -68,9 +68,7 @@
         "char_default"
       ],
       "equippedChar": "char_default",
-      "equippedAccs": [
-        "acc_mod_crown"
-      ],
+      "equippedAccs": [],
       "claimedAdvent": [],
       "legacyPointsConverted": true,
       "puzzleRewards": {
